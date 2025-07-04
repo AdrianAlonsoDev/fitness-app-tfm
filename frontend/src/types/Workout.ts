@@ -1,6 +1,7 @@
 export interface Workout {
   id: number;
-  title: string;
+  user_id: number;
+  name: string;
   category: string;
   notes: string;
 }

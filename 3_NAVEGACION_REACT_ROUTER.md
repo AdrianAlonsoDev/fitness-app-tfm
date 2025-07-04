@@ -198,10 +198,7 @@ export const HomePage = () => {
 
 ## 🚀 Próximos pasos
 
-Cuando estés listo, puedes:
 1. Añadir más páginas (Rutinas, Dietas, Pagos)
 2. Mejorar el diseño del menú de navegación
 3. Añadir iconos y estilos más profesionales
 4. Proteger rutas con autenticación
-
-¡Con esto ya tienes navegación funcionando! 🎉

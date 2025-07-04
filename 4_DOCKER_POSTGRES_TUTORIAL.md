@@ -476,5 +476,3 @@ module.exports = router;
 - [Documentación de node-postgres](https://node-postgres.com/)
 - [PostgreSQL Tutorial](https://www.postgresqltutorial.com/)
 - [Docker Compose docs](https://docs.docker.com/compose/)
-
-¡Felicidades! Ahora tienes una base de datos real funcionando con Docker. 🎉

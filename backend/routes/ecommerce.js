@@ -1,88 +1,101 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
+const { supabase } = require("../database/supabaseClient");
 
-let products = [
-  { 
-    id: 1, 
-    nombre: 'Toalla de baño', 
-    precio: 2.99,
-    descripcion: 'Toalla suave y absorbente',
-    imagen: 'https://example.com/toalla.jpg'
-  },
-  { 
-    id: 2, 
-    nombre: 'Mancuernas', 
-    precio: 22.99,
-    descripcion: 'Mancuernas de hierro fundido',
-    imagen: 'https://example.com/mancuernas.jpg'
+router.get("/", async (req, res) => {
+  try {
+    console.log("GET /api/products - Obteniendo todos los productos");
+    const { data, error } = await supabase
+      .from("products")
+      .select("*")
+      .order("id");
+    if (error) throw error;
+    res.json(data);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Error al obtener productos" });
   }
-];
-
-let nextProductId = 3;
-
-// Cambia las rutas a relativas
-router.get('/', (req, res) => {
-  res.json(products);
 });
 
-router.get('/:id', (req, res) => {
-  const id = parseInt(req.params.id);
-  const product = products.find(product => product.id === id);
-
-  if (!product) {
-    return res.status(404).json({ error: 'Producto no encontrado' });
+router.get("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { data, error } = await supabase
+      .from("products")
+      .select("*")
+      .eq("id", id)
+      .single();
+    if (error) throw error;
+    if (!data) return res.status(404).json({ error: "Producto no encontrado" });
+    res.json(data);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Error al buscar producto" });
   }
-
-  res.json(product);
 });
 
-router.post('/', (req, res) => {
-  const { nombre, precio, descripcion, imagen } = req.body;
+router.post("/", async (req, res) => {
+  try {
+    const { name, description, price } = req.body;
 
-  if (!nombre || !precio || !descripcion || !imagen) {
-    return res.status(400).json({ error: 'Todos los campos son requeridos' });
+    if (!name || !description || !price) {
+      return res.status(400).json({ error: "Faltan campos requeridos" });
+    }
+
+    const { data, error } = await supabase
+      .from("products")
+      .insert([{ name, description, price }])
+      .select()
+      .single();
+
+    if (error) throw error;
+    res.status(201).json(data);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Error al crear producto" });
   }
-
-  const newProduct = {
-    id: nextProductId++,
-    nombre,
-    precio,
-    descripcion,
-    imagen
-  };
-
-  products.push(newProduct);
-  res.status(201).json(newProduct);
 });
 
-router.put('/:id', (req, res) => {
-  const id = parseInt(req.params.id);
-  const { nombre, precio, descripcion, imagen } = req.body;
+router.put("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, description, price } = req.body;
 
-  const productIndex = products.findIndex(product => product.id === id);
+    const { data, error } = await supabase
+      .from("products")
+      .update({ name, description, price })
+      .eq("id", id)
+      .select()
+      .single();
 
-  if (productIndex === -1) {
-    return res.status(404).json({ error: 'Producto no encontrado' });
+    if (!data) return res.status(404).json({ error: "Producto no encontrado" });
+
+    if (error) throw error;
+    res.json(data);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Error al actualizar producto" });
   }
-
-  if (!nombre || !precio || !descripcion || !imagen) {
-    return res.status(400).json({ error: 'Todos los campos son requeridos' });
-  }
-
-  products[productIndex] = { id, nombre, precio, descripcion, imagen };
-  res.json(products[productIndex]);
 });
 
-router.delete('/:id', (req, res) => {
-  const id = parseInt(req.params.id);
-  const productIndex = products.findIndex(product => product.id === id);
-
-  if (productIndex === -1) {
-    return res.status(404).json({ error: 'Producto no encontrado' });
+router.delete("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { data, error } = await supabase
+      .from("products")
+      .delete()
+      .eq("id", id)
+      .select("name")
+      .single();
+    if (!data) return res.status(404).json({ error: "Producto no encontrado" });
+    if (error) throw error;
+    res.json({
+      message: `Producto ${data.name} eliminado correctamente`,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Error al eliminar producto" });
   }
-
-  products.splice(productIndex, 1);
-  res.json({ message: 'Producto eliminado correctamente' });
 });
 
 module.exports = router;

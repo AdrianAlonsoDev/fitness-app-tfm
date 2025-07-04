@@ -1,36 +1,41 @@
 import { Product } from '../types/Product';
-
-const API_URL = 'http://localhost:3001/api/products';
+import axiosInstance from '../lib/axios';
 
 export const getProducts = async (): Promise<Product[]> => {
-  const response = await fetch(API_URL);
-  if (!response.ok) throw new Error('Error al obtener productos');
-  return response.json();
+  try {
+    const response = await axiosInstance.get('/products');
+    return response.data;
+  } catch (error: any) {
+    console.error('Error al obtener productos:', error.response?.data || error.message);
+    throw new Error(error.response?.data?.message || 'Error al obtener productos');
+  }
 };
 
 export const createProduct = async (product: Omit<Product, 'id'>): Promise<Product> => {
-  const response = await fetch(API_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(product),
-  });
-  if (!response.ok) throw new Error('Error al crear producto');
-  return response.json();
+  try {
+    const response = await axiosInstance.post('/products', product);
+    return response.data;
+  } catch (error: any) {
+    console.error('Error al crear producto:', error.response?.data || error.message);
+    throw new Error(error.response?.data?.message || 'Error al crear producto');
+  }
 };
 
 export const updateProduct = async (id: number, product: Omit<Product, 'id'>): Promise<Product> => {
-  const response = await fetch(`${API_URL}/${id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(product),
-  });
-  if (!response.ok) throw new Error('Error al actualizar producto');
-  return response.json();
+  try {
+    const response = await axiosInstance.put(`/products/${id}`, product);
+    return response.data;
+  } catch (error: any) {
+    console.error('Error al actualizar producto:', error.response?.data || error.message);
+    throw new Error(error.response?.data?.message || 'Error al actualizar producto');
+  }
 };
 
 export const deleteProduct = async (id: number): Promise<void> => {
-  const response = await fetch(`${API_URL}/${id}`, {
-    method: 'DELETE',
-  });
-  if (!response.ok) throw new Error('Error al eliminar producto');
+  try {
+    await axiosInstance.delete(`/products/${id}`);
+  } catch (error: any) {
+    console.error('Error al eliminar producto:', error.response?.data || error.message);
+    throw new Error(error.response?.data?.message || 'Error al eliminar producto');
+  }
 };

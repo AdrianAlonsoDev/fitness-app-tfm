@@ -1,0 +1,187 @@
+/** **************************************
+* COMPONENT STYLES - FITNESS APP
+* Estilos específicos para componentes
+*************************************** */
+
+/** **************************************
+* Cards y contenedores
+*************************************** */
+.fitness-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease-in-out;
+}
+
+.fitness-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.fitness-card-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.fitness-card-content {
+  padding: 1.5rem;
+}
+
+/** **************************************
+* Botones
+*************************************** */
+.fitness-btn {
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  text-transform: none;
+}
+
+.fitness-btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+}
+
+.fitness-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.fitness-btn-secondary {
+  background: #f8f9fa;
+  color: #495057;
+  border: 1px solid #dee2e6;
+}
+
+.fitness-btn-secondary:hover {
+  background: #e9ecef;
+  border-color: #adb5bd;
+}
+
+/** **************************************
+* Formularios
+*************************************** */
+.fitness-form {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.fitness-form-group {
+  margin-bottom: 1.5rem;
+}
+
+.fitness-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.fitness-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/** **************************************
+* Tablas
+*************************************** */
+.fitness-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.fitness-table th {
+  background: #f8f9fa;
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #495057;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.fitness-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.fitness-table tr:hover {
+  background: #f8f9fa;
+}
+
+/** **************************************
+* Estados y feedback
+*************************************** */
+.fitness-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  color: #6c757d;
+}
+
+.fitness-error {
+  background: #fee;
+  color: #c53030;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #feb2b2;
+}
+
+.fitness-success {
+  background: #f0fff4;
+  color: #22543d;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #9ae6b4;
+}
+
+/** **************************************
+* Layout específico
+*************************************** */
+.fitness-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1rem 0;
+}
+
+.fitness-sidebar {
+  background: #f8f9fa;
+  border-right: 1px solid #dee2e6;
+  min-height: 100vh;
+}
+
+.fitness-main-content {
+  flex: 1;
+  padding: 2rem;
+  background: #fff;
+}
+
+/** **************************************
+* Responsive utilities
+*************************************** */
+@media (max-width: 768px) {
+  .fitness-card-content {
+    padding: 1rem;
+  }
+  
+  .fitness-main-content {
+    padding: 1rem;
+  }
+  
+  .fitness-table {
+    font-size: 0.875rem;
+  }
+  
+  .fitness-table th,
+  .fitness-table td {
+    padding: 0.75rem 0.5rem;
+  }
+}
